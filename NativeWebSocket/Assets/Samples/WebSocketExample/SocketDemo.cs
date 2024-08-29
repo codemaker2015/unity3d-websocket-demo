@@ -2,16 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using NativeWebSocket;
 
-public class Connection : MonoBehaviour
+public class SocketDemo : MonoBehaviour
 {
   WebSocket websocket;
 
   // Start is called before the first frame update
   async void Start()
   {
+    Text info = GameObject.Find("Info").GetComponent<Text>();
+
     // websocket = new WebSocket("ws://echo.websocket.org");
     websocket = new WebSocket("ws://localhost:3000");
 
@@ -35,6 +38,7 @@ public class Connection : MonoBehaviour
       // Reading a plain text message
       var message = System.Text.Encoding.UTF8.GetString(bytes);
       Debug.Log("Received OnMessage! (" + bytes.Length + " bytes) " + message);
+      info.text = message;
     };
 
     // Keep sending messages at every 0.3s
